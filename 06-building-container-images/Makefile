@@ -1,6 +1,6 @@
 .PHONY: build-sample
 build-sample:
-	DOCKER_BUILDKIT=1 docker build \
+	DOCKER_BUILDKIT=1 podman build \
 		--build-arg BASE_IMAGE_TAG=19.3 \
 		--secret id=secret.txt,src=local-secret.txt \
 		-t sample \
@@ -11,7 +11,7 @@ build-sample:
 build-multiarch:
 	# Requires having container registry to push to
 	# Here it uses https://hub.docker.com/r/sidpalas/multi-arch-test
-	docker buildx build \
+	podman buildx build \
 		--platform linux/amd64,linux/arm64,linux/arm/v7 \
 		--secret id=secret.txt,src=local-secret.txt \
 		-t sidpalas/multi-arch-test:latest \
@@ -24,19 +24,19 @@ run-sample-entrypoint-cmd: build-sample
 	@echo "$$ENTRYPOINT_CMD_DESCRIPTION"
 
 	@echo "Run with no arguments:"
-	docker run sample
+	podman run sample
 
 	@echo "##############################"
 	@echo "Run with argument (CMD is ignored):"
-	docker run sample "+ (argument)"
+	podman run sample "+ (argument)"
 
 	@echo "##############################"
 	@echo "Overriden entrypoint with no arguments (CMD is ignored):"
-	docker run --entrypoint echo sample
+	podman run --entrypoint echo sample
 
 	@echo "##############################"
 	@echo "Overriden entrypoint with arguments (CMD is ignored):"
-	docker run --entrypoint echo sample "Hey Team 👋 (Overriden entrypoint + arguments)"
+	podman run --entrypoint echo sample "Hey Team 👋 (Overriden entrypoint + arguments)"
 
 define ENTRYPOINT_CMD_DESCRIPTION
 

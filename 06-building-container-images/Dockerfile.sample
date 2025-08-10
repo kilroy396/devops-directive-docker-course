@@ -9,7 +9,7 @@ ARG BASE_IMAGE_TAG=19.4
 # ARGs can be overriden at build time 
 # > docker build --build-arg BASE_VERSION=19.3 .
 
-FROM node:${BASE_IMAGE_TAG}
+FROM docker.io/node:${BASE_IMAGE_TAG}
 
 LABEL org.opencontainers.image.authors="sid@devopsdirective.com"
 

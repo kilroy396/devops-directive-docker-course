@@ -22,8 +22,10 @@ RUN npm run build
 FROM docker.io/nginxinc/nginx-unprivileged:stable-alpine-perl
 
 # Use COPY --link to avoid breaking cache if we change the second stage base image
-COPY --link nginx.conf /etc/nginx/conf.d/default.conf
+#COPY --link nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY --link --from=build usr/src/app/dist/ /usr/share/nginx/html
+#COPY --link --from=build usr/src/app/dist/ /usr/share/nginx/html
+COPY --from=build usr/src/app/dist/ /usr/share/nginx/html
 
 EXPOSE 8080
